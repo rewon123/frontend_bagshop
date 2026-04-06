@@ -1,0 +1,100 @@
+'use client'
+import React, { useState, useEffect } from "react";
+import { motion } from "motion/react";
+
+function About() {
+  const [content, setContent] = useState({
+    title: 'About Us',
+    paragraph1: 'We represent sophisticated and timeless Scandinavian elegance through our collections of skillfully crafted leather goods and accessories of the finest quality. "Sweet Stitches" is a Danish word meaning "New Morning". Sweet Stitches is a symbol of nature, strength and generosity as depicted in our products, designed at Sweet Stitches studio in Bangladesh, Our team constantly focus on classical and functional design with a distinctly contemporary approach.',
+    paragraph2: 'To design Sweet Stitches products that would make women feel empowered and men feel confident in their life.',
+    paragraph3: 'Sweet Stitches\'s products are made with love and preserve the trend throughout the generation.',
+    quote1: '“Every Morning Comes in a Sweet Stitches”',
+    quote2: '“Reflect Your Personality”'
+  })
+
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    fetchAboutUsContent()
+  }, [])
+
+  const fetchAboutUsContent = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/about-us`) 
+      if (response.ok) {
+        const data = await response.json()
+        if (data.title) { 
+          setContent(data)
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching about us content:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="bg-gray-50 p-6 sm:p-8 md:p-12 mx-auto my-8 sm:my-12 md:my-16 rounded-lg shadow-lg max-w-full sm:max-w-lg md:max-w-3xl -mt-20 lg:mt-24 xl:mt-20 flex justify-center items-center h-64">
+        <div className="text-xl">Loading...</div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="bg-gray-50 p-6 sm:p-8 md:p-12 mx-auto my-8 sm:my-12 md:my-16 rounded-lg shadow-lg max-w-full sm:max-w-lg md:max-w-3xl -mt-20 lg:mt-24 xl:mt-20">
+      <motion.div
+        className="text-center"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+          {content.title}
+        </h1>
+        <p className="text-gray-600 leading-6 sm:leading-7 text-sm sm:text-base">
+          {content.paragraph1}
+        </p>
+      </motion.div>
+
+      <motion.div
+        className="mt-6 sm:mt-8"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.5, duration: 1 }}
+      >
+        <p className="text-gray-600 leading-6 sm:leading-7 text-sm sm:text-base">
+          {content.paragraph2}
+        </p>
+      </motion.div>
+
+      <motion.div
+        className="mt-6 sm:mt-8"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+      >
+        <p className="text-gray-600 leading-6 sm:leading-7 text-sm sm:text-base">
+          {content.paragraph3}
+        </p>
+      </motion.div>
+
+      <motion.div
+        className="mt-8 text-center"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 1 }}
+      >
+        <p className="italic text-gray-500 text-sm sm:text-base mb-4">
+          {content.quote1}
+        </p>
+        <p className="italic text-gray-500 text-sm sm:text-base">
+          {content.quote2}
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
+export default About;

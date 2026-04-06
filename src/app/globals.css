@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  /* --background: #ffffff; */
+  /* --foreground: #171717; */
+  --font-open-sans: "Open Sans", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --font-open-sans: "Open Sans", sans-serif;
+    /* --background: #0a0a0a; */
+    /* --foreground: #ededed; */
+  }
+}
+
+body {
+  color: var(--foreground);
+  margin: 0;
+  padding: 0;
+  /* height: 100vh;
+  background: linear-gradient(135deg, red 50%, #2e2e2e 50%); */
+}
+
+.back {
+  /* margin: 0;
+  padding: 0; */
+  /* color: white; */
+  /* min-height: 100vh; */
+  background: linear-gradient(135deg, rgba(48, 53, 65,1) 55%, rgba(236, 28, 35, 1) 45%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* position: relative; */
+}
+
+/* .back::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.back::after {
+  content: '';
+  position: fixed;
+  bottom: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+  opacity: 0.8;
+  filter: blur(50px);
+  pointer-events: none;
+} */
+
+.change-color{
+  color: black;
+}
+
+h1 {
+  /* font-family: var(--font-open-sans); */
+  font-weight: 700; 
+}
+.z-110 {
+  z-index: 10;
+}
+.z-220 {
+  z-index: 20;
+}
+.z-330 {
+  z-index: 30;
+}
+.z-440 {
+  z-index: 40;
+}
+.z-550 {
+  z-index: 50;
+}
+.z-660 {
+  z-index: 60;
+}
+.z-770 {
+  z-index: 70;
+}
+.z-880 {
+  z-index: 80;
+}
+.z-990 {
+  z-index: 90;
+}
+.z-1000 {
+  z-index: 100;
+}
+
+
+p {
+  /* font-family: var(--font-open-sans); */
+  font-weight: 300;
+}
+.font-futura-sans {
+  font-family: var(--font-futura-sans), sans-serif;
+}
+
+.dynamic-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: gray lightgray; 
+}
+
+.dynamic-scrollbar::-webkit-scrollbar {
+  width: var(--scrollbar-width, 1px);
+}
+
+.dynamic-scrollbar::-webkit-scrollbar-thumb {
+  background: gray; 
+  border-radius: 4px;
+}
+
+.dynamic-scrollbar::-webkit-scrollbar-track {
+  background: lightgray; 
+}
+
+
+
+@media (max-width: 1050px) {
+  .main-navbar {
+    display: none;
+  }
+  .mobile-sidebar {
+    display: block;
+  }
+  .upper{
+    display: none
+  }
+}
+
+@media (min-width: 1051px) {
+  .main-navbar {
+    display: block;
+  }
+  .mobile-sidebar {
+    display: none;
+  }
+  .upper{
+    display: flex
+  }
+}
