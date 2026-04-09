@@ -65,7 +65,7 @@ function AddProduct() {
       formData.append("image", file);
 
       const res = await fetch(
-        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+        `https://api.imgbb.com/1/upload?key=d0ec1f31d05e23b6e5d25dd33582d607`,
         {
           method: "POST",
           body: formData,

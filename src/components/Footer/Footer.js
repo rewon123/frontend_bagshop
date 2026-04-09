@@ -17,6 +17,11 @@ function Footer() {
                 <Link href="" className="hover:opacity-75">
                   BD Office: 87, central road, Dhanmondi,  dhaka
                 </Link>
+                <Link href="" className="hover:opacity-75">
+                  বাসা ১৫, রাস্তা ৭, ধানমন্ডি ১২০৫, Dhaka,
+                  Bangladesh, 1 205
+                </Link>
+
 
                 <Link href="" className="hover:opacity-75">
                   +8801672334516
