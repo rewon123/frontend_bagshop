@@ -24,6 +24,7 @@ function AddProduct() {
 
   const [parentCategory, setParentCategory] = useState("");
   const [images, setImages] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]); // ✅ NEW
   const [isAdmin, setIsAdmin] = useState(false);
 
   /* ===============================
@@ -45,7 +46,6 @@ function AddProduct() {
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    // simple credentials
     if (username === "admin" && password === "1234") {
       localStorage.setItem("adminLoggedIn", "true");
       setIsAdmin(true);
@@ -80,6 +80,14 @@ function AddProduct() {
   };
 
   /* ===============================
+     AUTO UPLOAD FUNCTION (NEW)
+  ================================ */
+  const handleImageUpload = async (files) => {
+    const urls = await uploadImagesToImgbb(files);
+    setImageUrls(urls);
+  };
+
+  /* ===============================
      SUBMIT PRODUCT
   ================================ */
   const onSubmit = async (data) => {
@@ -88,12 +96,10 @@ function AddProduct() {
       return;
     }
 
-    if (images.length === 0) {
-      alert("Please upload at least one image");
+    if (imageUrls.length === 0) {
+      alert("Images are still uploading or missing");
       return;
     }
-
-    const imageUrls = await uploadImagesToImgbb(images);
 
     const payload = {
       name: data.name,
@@ -102,7 +108,7 @@ function AddProduct() {
       askingPrice: Number(data.askingPrice),
       mainPrice: Number(data.mainPrice),
       discount: Number(data.discount),
-      images: imageUrls,
+      images: imageUrls, // ✅ use uploaded URLs
     };
 
     const res = await fetch("https://sweetstitchesbackend.onrender.com/addProducts", {
@@ -226,6 +232,7 @@ function AddProduct() {
           <input
             type="number"
             placeholder="Main Price"
+            value={0}
             className="border p-2"
             {...register("mainPrice", { required: true })}
           />
@@ -244,12 +251,19 @@ function AddProduct() {
           multiple
           accept="image/*"
           className="mb-4"
-          onChange={(e) => setImages([...e.target.files])}
+          onChange={(e) => {
+            const files = [...e.target.files];
+            setImages(files);
+            handleImageUpload(files); // ✅ auto upload
+          }}
         />
 
-        <button className="w-full py-3 bg-orange-500 text-white rounded-lg">
-          Add Product
-        </button>
+        {/* BUTTON (VISIBLE ONLY AFTER UPLOAD) */}
+        {imageUrls.length > 0 && (
+          <button className="w-full py-3 bg-orange-500 text-white rounded-lg">
+            Add Product
+          </button>
+        )}
       </form>
     </div>
   );
