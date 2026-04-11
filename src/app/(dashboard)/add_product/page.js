@@ -24,7 +24,7 @@ function AddProduct() {
 
   const [parentCategory, setParentCategory] = useState("");
   const [images, setImages] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]); // ✅ NEW
+  const [imageUrls, setImageUrls] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
 
   /* ===============================
@@ -55,17 +55,27 @@ function AddProduct() {
   };
 
   /* ===============================
-     IMAGE UPLOAD
+     🔥 CLOUDINARY UPLOAD (ENHANCED)
   ================================ */
   const uploadImagesToImgbb = async (files) => {
     const urls = [];
 
     for (let file of files) {
       const formData = new FormData();
-      formData.append("image", file);
+
+      formData.append("file", file);
+      formData.append("upload_preset", "my_uploads"); // must exist in Cloudinary
+      formData.append("folder", "products");
+
+      const fileName = file.name
+        .split(".")[0]
+        .replace(/\s+/g, "-")
+        .toLowerCase();
+
+      formData.append("public_id", fileName + "-" + Date.now());
 
       const res = await fetch(
-        `https://api.imgbb.com/1/upload?key=d0ec1f31d05e23b6e5d25dd33582d607`,
+        "https://api.cloudinary.com/v1_1/drjtx55yw/image/upload",
         {
           method: "POST",
           body: formData,
@@ -73,14 +83,20 @@ function AddProduct() {
       );
 
       const data = await res.json();
-      urls.push(data.data.url);
+
+      const optimizedUrl = data.secure_url.replace(
+        "/upload/",
+        "/upload/f_auto,q_auto/"
+      );
+
+      urls.push(optimizedUrl);
     }
 
     return urls;
   };
 
   /* ===============================
-     AUTO UPLOAD FUNCTION (NEW)
+     AUTO UPLOAD FUNCTION
   ================================ */
   const handleImageUpload = async (files) => {
     const urls = await uploadImagesToImgbb(files);
@@ -108,7 +124,7 @@ function AddProduct() {
       askingPrice: Number(data.askingPrice),
       mainPrice: Number(data.mainPrice),
       discount: Number(data.discount),
-      images: imageUrls, // ✅ use uploaded URLs
+      images: imageUrls,
     };
 
     const res = await fetch("https://sweetstitchesbackend.onrender.com/addProducts", {
@@ -254,7 +270,7 @@ function AddProduct() {
           onChange={(e) => {
             const files = [...e.target.files];
             setImages(files);
-            handleImageUpload(files); // ✅ auto upload
+            handleImageUpload(files);
           }}
         />
 
