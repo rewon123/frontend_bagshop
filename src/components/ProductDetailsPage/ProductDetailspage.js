@@ -5,6 +5,7 @@ import Button3 from "@/containers/common/Button3/Button3";
 import ProductDetailFooter from "../ProductDetailFooter/ProductDetailFooter";
 import { X } from "lucide-react";
 import CartDrawer from "@/containers/common/CartDrawer/CartDrawer";
+import SliderComponent from "@/containers/common/SliderProductPage/SliderComponent"; // ✅ added
 
 function ProductDetailspage({ id }) {
   const [data, setData] = useState(null);
@@ -30,7 +31,7 @@ function ProductDetailspage({ id }) {
       .catch((err) => console.error(err));
   }, [id]);
 
-  /* ---------------- IMAGE OBSERVER ---------------- */
+  /* ---------------- IMAGE OBSERVER (DESKTOP ONLY) ---------------- */
   useEffect(() => {
     const imageElements = document.querySelectorAll(".middle-image");
 
@@ -49,16 +50,11 @@ function ProductDetailspage({ id }) {
     return () => imageElements.forEach((el) => observer.unobserve(el));
   }, [data]);
 
-  /* ---------------- QUANTITY HANDLERS ---------------- */
-  const increment = () => {
-    setQuantity((prev) => Number(prev) + 1);
-  };
+  /* ---------------- QUANTITY ---------------- */
+  const increment = () => setQuantity((prev) => Number(prev) + 1);
 
   const decrement = () => {
-    setQuantity((prev) => {
-      if (prev <= 1) return 1;
-      return Number(prev) - 1;
-    });
+    setQuantity((prev) => (prev <= 1 ? 1 : Number(prev) - 1));
   };
 
   const handleChange = (e) => {
@@ -111,7 +107,7 @@ function ProductDetailspage({ id }) {
     <div className="container mx-auto -mt-20 lg:mt-24 mb-10">
       <div className="grid grid-cols-6 lg:grid-cols-12 lg:gap-4 pt-5">
 
-        {/* LEFT THUMBNAILS */}
+        {/* ---------------- LEFT THUMBNAILS (DESKTOP) ---------------- */}
         <div className="hidden lg:block col-span-1 sticky top-20">
           {data.images?.map((img, i) => (
             <img
@@ -129,7 +125,7 @@ function ProductDetailspage({ id }) {
           ))}
         </div>
 
-        {/* MAIN IMAGES */}
+        {/* ---------------- MAIN IMAGES (DESKTOP) ---------------- */}
         <div className="hidden lg:block col-span-6 px-2">
           {data.images?.map((img, i) => (
             <img
@@ -142,7 +138,12 @@ function ProductDetailspage({ id }) {
           ))}
         </div>
 
-        {/* PRODUCT INFO */}
+        {/* ---------------- MOBILE IMAGES (FIXED 🔥) ---------------- */}
+        <div className="col-span-6 lg:hidden px-2">
+          <SliderComponent images={data.images} />
+        </div>
+
+        {/* ---------------- PRODUCT INFO ---------------- */}
         <div className="col-span-6 lg:col-span-5 px-2">
           <h2 className="text-2xl uppercase tracking-widest text-gray-700">
             {data.name}
@@ -199,7 +200,7 @@ function ProductDetailspage({ id }) {
       <hr className="mt-16" />
       <ProductDetailFooter />
 
-      {/* IMAGE MODAL */}
+      {/* ---------------- IMAGE MODAL ---------------- */}
       {selectedImage && (
         <div
           className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
