@@ -68,6 +68,7 @@ function Navbar() {
             {/* Logo */}
             <Link
               href="/"
+              style={{fontSize:'3vw'}}
               className="font-bold tracking-wider uppercase text-2xl absolute left-1/2 transform -translate-x-1/2"
             >
               Sweet Stitch zone
