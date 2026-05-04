@@ -5,12 +5,12 @@ import euroCountries from "@/Data/Countries";
 import { accessories } from "@/Data/ProductData";
 import { SettingsContext } from "@/hooks/SettingsProvider";
 import Link from "next/link";
+import Image from "next/image";
 import React, { useContext, useState } from "react";
 
 function Accessories({ products, settings }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const prdata = products;
-  console.log(prdata);
 
   // const { country } = useContext(SettingsContext);
 
@@ -44,20 +44,28 @@ function Accessories({ products, settings }) {
                 // onMouseLeave={() => setHoveredIndex(null)}
               >
                 <div className="relative w-full h-72">
-                  <img
+                  <Image
                     src={product.images[0]}
-                    // alt={validUtility?.productName}
+                    alt={product?.name || "Product image"}
+                    fill
+                    loading="lazy"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
                     className={`w-full h-full object-cover rounded-t-md transition-opacity duration-500 ${
                       hoveredIndex === index ? "opacity-0" : "opacity-100"
                     }`}
                   />
-                  <img
-                    src={product.images[1]}
-                    // alt={`${validUtility?.productName} hover`}
-                    className={`absolute top-0 left-0 w-full h-full object-cover rounded-t-md transition-opacity duration-500 ${
-                      hoveredIndex === index ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
+                  {product.images?.[1] && (
+                    <Image
+                      src={product.images[1]}
+                      alt={`${product?.name || "Product"} hover`}
+                      fill
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                      className={`absolute top-0 left-0 w-full h-full object-cover rounded-t-md transition-opacity duration-500 ${
+                        hoveredIndex === index ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  )}
                 </div>
 
              

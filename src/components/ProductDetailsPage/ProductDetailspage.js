@@ -4,8 +4,13 @@ import React, { useEffect, useState } from "react";
 import Button3 from "@/containers/common/Button3/Button3";
 import ProductDetailFooter from "../ProductDetailFooter/ProductDetailFooter";
 import { X } from "lucide-react";
-import CartDrawer from "@/containers/common/CartDrawer/CartDrawer";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import SliderComponent from "@/containers/common/SliderProductPage/SliderComponent"; // ✅ added
+
+const CartDrawer = dynamic(() => import("@/containers/common/CartDrawer/CartDrawer"), {
+  ssr: false,
+});
 
 function ProductDetailspage({ id }) {
   const [data, setData] = useState(null);
@@ -110,9 +115,13 @@ function ProductDetailspage({ id }) {
         {/* ---------------- LEFT THUMBNAILS (DESKTOP) ---------------- */}
         <div className="hidden lg:block col-span-1 sticky top-20">
           {data.images?.map((img, i) => (
-            <img
+            <Image
               key={i}
               src={img}
+              alt={`${data?.name || "Product"} thumbnail ${i + 1}`}
+              width={64}
+              height={80}
+              loading="lazy"
               className={`h-20 w-16 cursor-pointer mb-2 ${
                 activeIndex === i ? "border-2 border-blue-500" : ""
               }`}
@@ -128,9 +137,14 @@ function ProductDetailspage({ id }) {
         {/* ---------------- MAIN IMAGES (DESKTOP) ---------------- */}
         <div className="hidden lg:block col-span-6 px-2">
           {data.images?.map((img, i) => (
-            <img
+            <Image
               key={i}
               src={img}
+              alt={`${data?.name || "Product"} image ${i + 1}`}
+              width={1200}
+              height={1500}
+              loading={i === 0 ? "eager" : "lazy"}
+              sizes="(max-width: 1024px) 100vw, 50vw"
               data-index={i}
               className="w-full mb-4 cursor-pointer middle-image"
               onClick={() => openModal(img)}
@@ -209,9 +223,12 @@ function ProductDetailspage({ id }) {
           <button className="absolute top-4 right-4">
             <X className="text-white" />
           </button>
-
-          <img
+          <Image
             src={selectedImage}
+            alt={`${data?.name || "Product"} zoomed`}
+            width={1200}
+            height={1500}
+            sizes="100vw"
             className="max-w-full max-h-full"
             onClick={(e) => e.stopPropagation()}
           />

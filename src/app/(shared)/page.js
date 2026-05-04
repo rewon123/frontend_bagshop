@@ -1,22 +1,21 @@
-"use client";
 import Accessories from "@/components/Accessories/Accessories";
 import LandingInsta from "@/components/Instagram/LandingInsta";
-import { useContext, useEffect, useState } from "react";
 
+async function getProducts() {
+  try {
+    const res = await fetch("https://sweetstitchesbackend.onrender.com/allProducts", {
+      next: { revalidate: 120 },
+    });
 
-export default function Home() {
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    return [];
+  }
+}
 
-  // const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    fetch("https://sweetstitchesbackend.onrender.com/allProducts")
-      .then(res => res.json())
-      .then(data => setProducts(data))
-      .catch(err => console.error(err));
-    }, []);
-
-  
+export default async function Home() {
+  const products = await getProducts();
 
   return (
     <div className="min-h-screen container mx-auto -mt-24 md:-mt-26 z-0 mb-20">
