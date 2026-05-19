@@ -43,7 +43,7 @@ function Navbar() {
             <div className="flex gap-5 items-center">
               <Link href="/">
                 <Image
-                  src="/icon.png"
+                  src="https://scontent.fdac41-1.fna.fbcdn.net/v/t39.30808-1/581004029_122156980766876866_1542493968047687528_n.jpg?stp=dst-jpg_p120x120_tt6&_nc_cat=100&ccb=1-7&_nc_sid=2d3e12&_nc_eui2=AeELKsuVOVeCG9de6r9A2FCKUvo7uLLdUd1S-ju4st1R3W4id16DCrJhuvRBuBQ841kSkB22aQpDjBpHVGp1hG3Z&_nc_ohc=qOltLvgh0e4Q7kNvwHOBqZz&_nc_oc=Ado5rhfmPde6UyMQ16eqxBsfbKEK2vkomZEisg_kvoJpN-0ssTLJbD04mHtmshDzzZs&_nc_zt=24&_nc_ht=scontent.fdac41-1.fna&_nc_gid=udvF3Ujo4Y7aNQcewye0yA&_nc_ss=7b2a8&oh=00_Af7PBSylHJ-G3xJeNl6uPfyjrry7IrQsJSUEhroniy_XfA&oe=6A12739D"
                   alt="logo"
                   width={50}
                   height={50}
