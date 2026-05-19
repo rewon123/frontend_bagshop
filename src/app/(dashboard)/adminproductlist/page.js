@@ -54,7 +54,7 @@ function AdminProductList() {
 
     const fetchData = async () => {
       try {
-        const res = await fetch("https://sweetstitchesbackend.onrender.com/allProducts");
+        const res = await fetch("https://sweetstitches-backend.vercel.app/allProducts");
         const result = await res.json();
         setData(result);
       } catch (err) {
@@ -78,7 +78,7 @@ function AdminProductList() {
 
     try {
       const response = await fetch(
-        `https://sweetstitchesbackend.onrender.com/product/${productToDelete}`,
+        `https://sweetstitches-backend.vercel.app/product/${productToDelete}`,
         {
           method: "DELETE",
         }
@@ -132,7 +132,7 @@ function AdminProductList() {
   const handleUpdateProduct = async () => {
     try {
       const response = await fetch(
-        `https://sweetstitchesbackend.onrender.com/product/${productToEdit._id}`,
+        `https://sweetstitches-backend.vercel.app/product/${productToEdit._id}`,
         {
           method: "PUT",
           headers: {

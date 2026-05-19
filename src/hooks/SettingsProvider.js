@@ -13,7 +13,7 @@ const SettingsProvider = ({ children }) => {
 
       try {
         const [settingsRes] = await Promise.all([
-          fetch(`https://sweetstitchesbackend.onrender.com/allProducts`),
+          fetch(`https://sweetstitches-backend.vercel.app/allProducts`),
         ]);
         
         const settingsData = await settingsRes.json();

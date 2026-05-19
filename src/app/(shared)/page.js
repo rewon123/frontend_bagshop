@@ -3,7 +3,7 @@ import LandingInsta from "@/components/Instagram/LandingInsta";
 
 async function getProducts() {
   try {
-    const res = await fetch("https://sweetstitchesbackend.onrender.com/allProducts", {
+    const res = await fetch("https://sweetstitches-backend.vercel.app/allProducts", {
       next: { revalidate: 120 },
     });
 

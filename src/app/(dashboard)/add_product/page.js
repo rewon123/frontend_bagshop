@@ -127,7 +127,7 @@ function AddProduct() {
       images: imageUrls,
     };
 
-    const res = await fetch("https://sweetstitchesbackend.onrender.com/addProducts", {
+    const res = await fetch("https://sweetstitches-backend.vercel.app/addProducts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -12,8 +12,8 @@ const CartDrawer = dynamic(() => import("@/containers/common/CartDrawer/CartDraw
   ssr: false,
 });
 
-function ProductDetailspage({ id }) {
-  const [data, setData] = useState(null);
+function ProductDetailspage({ id, initialData = null }) {
+  const [data, setData] = useState(initialData);
   const [cartDrawer, setCartDrawer] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -25,16 +25,16 @@ function ProductDetailspage({ id }) {
 
   /* ---------------- FETCH PRODUCT ---------------- */
   useEffect(() => {
-    if (!id) return;
+    if (!id || initialData?._id === id) return;
 
-    fetch(`https://sweetstitchesbackend.onrender.com/product/${id}`)
+    fetch(`https://sweetstitches-backend.vercel.app/product/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch product");
         return res.json();
       })
       .then((product) => setData(product))
       .catch((err) => console.error(err));
-  }, [id]);
+  }, [id, initialData]);
 
   /* ---------------- IMAGE OBSERVER (DESKTOP ONLY) ---------------- */
   useEffect(() => {

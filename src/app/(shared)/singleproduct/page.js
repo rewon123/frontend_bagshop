@@ -1,15 +1,27 @@
-'use client'
 import ProductDetailspage from "@/components/ProductDetailsPage/ProductDetailspage";
-import { useSearchParams } from "next/navigation";
 import React from "react";
 
-function ProductDetails() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+async function getProduct(id) {
+  if (!id) return null;
+
+  try {
+    const res = await fetch(`https://sweetstitches-backend.vercel.app/product/${id}`, {
+      next: { revalidate: 120 },
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch (error) {
+    return null;
+  }
+}
+
+async function ProductDetails({ searchParams }) {
+  const id = searchParams?.id || null;
+  const product = await getProduct(id);
 
   return (
     <>
-      <ProductDetailspage id={id} />
+      <ProductDetailspage id={id} initialData={product} />
     </>
   );
 }
