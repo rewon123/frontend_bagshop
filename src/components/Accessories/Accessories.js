@@ -12,45 +12,34 @@ function Accessories({ products, settings }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const prdata = products;
 
-  // const { country } = useContext(SettingsContext);
-
   return (
     <div className="px-6 py-8 container mx-auto mt-20">
-      <h2 className="text-2xl font-thin mb-6">
-        {" "}
-      </h2>
+      <h2 className="text-2xl font-thin mb-6"> </h2>
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center">
+        {/* Added w-full to the grid wrapper */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center w-full">
           {prdata.map((product, index) => {
-            // let validUtility = product?.utilities.find(
-            //   (utility) => utility?.numberOfProducts > 0
-            // );
-            // const isSoldOut = !validUtility;
-            // if (isSoldOut) {
-            //   validUtility = product?.utilities[0];
-            // }
-            // console.log(validUtility);
-
             return (
               <Link
-              // href={`/singleproduct:${product._id}`}
                 href={{
                   pathname: `/singleproduct`,
                   query: { id: product._id },
                 }}
                 key={index}
-                className="md:w-72 p-6"
-                // onMouseEnter={() => setHoveredIndex(index)}
-                // onMouseLeave={() => setHoveredIndex(null)}
+                /* FIX 1: Changed md:w-72 to w-full md:max-w-72 to prevent squishing on mobile */
+                className="w-full max-w-[20rem] md:w-72 p-6 flex flex-col"
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
               >
-                <div className="relative w-full h-72">
+                {/* FIX 2: Wrapped in an aspect-square container so Next.js 'fill' scales perfectly */}
+                <div className="relative w-full aspect-square overflow-hidden rounded-t-md">
                   <Image
                     src={product.images[0]}
                     alt={product?.name || "Product image"}
                     fill
                     loading="lazy"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-                    className={`w-full h-full object-cover rounded-t-md transition-opacity duration-500 ${
+                    className={`object-cover transition-opacity duration-500 ${
                       hoveredIndex === index ? "opacity-0" : "opacity-100"
                     }`}
                   />
@@ -61,14 +50,12 @@ function Accessories({ products, settings }) {
                       fill
                       loading="lazy"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-                      className={`absolute top-0 left-0 w-full h-full object-cover rounded-t-md transition-opacity duration-500 ${
+                      className={`absolute top-0 left-0 object-cover transition-opacity duration-500 ${
                         hoveredIndex === index ? "opacity-100" : "opacity-0"
                       }`}
                     />
                   )}
                 </div>
-
-             
 
                 <div className="mt-1">
                   <div className="flex justify-between items-center py-1">
@@ -76,13 +63,9 @@ function Accessories({ products, settings }) {
                       {product.name}
                     </h1>
                     <p className="text-xs">
-                        <span>
-                          BDT{" "}
-                          {Math.round(
-                            product.askingPrice 
-                          )}
-                        </span>
-                     
+                      <span>
+                        BDT {Math.round(product.askingPrice)}
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -92,14 +75,7 @@ function Accessories({ products, settings }) {
         </div>
       </div>
       <div className="mt-6 text-center flex justify-center items-center">
-        <Link href='./allproducts'
-          // href={{
-          //   pathname: "/allproducts",
-          //   query: {
-          //     take: `/${settings?.promote2?.person}/${settings?.promote2?.category}/${settings?.promote2?.subCategory}`,
-          //   },
-          // }}
-        >
+        <Link href="./allproducts">
           <Button2 text="See More" />
         </Link>
       </div>
