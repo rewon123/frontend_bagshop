@@ -7,6 +7,28 @@ function CartDrawer({ isDrawerOpen, toggleDrawer }) {
 
   const [cartItems, setCartItems] = useState([]);
 
+
+
+
+
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024); // 768px is the standard mobile breakpoint
+    };
+
+    handleResize(); // Run on initial render
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
+
+
+
+
   /* -------- LOAD CART -------- */
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -55,9 +77,8 @@ function CartDrawer({ isDrawerOpen, toggleDrawer }) {
 
   return (
     <div
-      className={`!z-50 fixed rounded-lg top-16 lg:top-0 right-0 h-full w-80 bg-white shadow-2xl border transition-transform duration-300 ${
-        isDrawerOpen ? "translate-x-0" : "translate-x-full"
-      }`}
+      className={`!z-50 fixed rounded-lg top-16 lg:top-0 right-0 h-full w-80 bg-white shadow-2xl border transition-transform duration-300 ${isDrawerOpen ? "translate-x-0" : "translate-x-full"
+        }`}
     >
       <div className="p-4 relative h-full flex flex-col justify-between">
 
@@ -134,39 +155,42 @@ function CartDrawer({ isDrawerOpen, toggleDrawer }) {
 
           </div>
         </div>
+        {/* // Your JSX code: */}
+        <div style={{ marginBottom: isMobile ? "60px" : "0px" }}>
+          {/* FOOTER */}
+          <div className="border-t pt-4">
 
-        {/* FOOTER */}
-        <div className="border-t pt-4">
+            <div className="flex justify-between mb-3">
+              <p className="text-sm">Subtotal</p>
+              <p className="text-sm">{subtotal} TAKA</p>
+            </div>
 
-          <div className="flex justify-between mb-3">
-            <p className="text-sm">Subtotal</p>
-            <p className="text-sm">{subtotal} TAKA</p>
+            <p className="text-gray-500 text-xs pb-3">
+              Taxes and shipping calculated at checkout
+            </p>
+
+            <Link href={cartItems.length === 0 ? "#" : "/checkout"}>
+              <Button3
+                text={
+                  cartItems.length === 0
+                    ? "Add products to checkout"
+                    : "PROCEED TO CHECKOUT"
+                }
+                backgroundColor={
+                  cartItems.length === 0 ? "#d3d3d3" : "#f5db8b"
+                }
+                borderColor={
+                  cartItems.length === 0 ? "#d3d3d3" : "#f5db8b"
+                }
+                textColor={
+                  cartItems.length === 0 ? "#a9a9a9" : "black"
+                }
+              />
+            </Link>
+
           </div>
-
-          <p className="text-gray-500 text-xs pb-3">
-            Taxes and shipping calculated at checkout
-          </p>
-
-          <Link href={cartItems.length === 0 ? "#" : "/checkout"}>
-            <Button3
-              text={
-                cartItems.length === 0
-                  ? "Add products to checkout"
-                  : "PROCEED TO CHECKOUT"
-              }
-              backgroundColor={
-                cartItems.length === 0 ? "#d3d3d3" : "#f5db8b"
-              }
-              borderColor={
-                cartItems.length === 0 ? "#d3d3d3" : "#f5db8b"
-              }
-              textColor={
-                cartItems.length === 0 ? "#a9a9a9" : "black"
-              }
-            />
-          </Link>
-
         </div>
+
       </div>
     </div>
   );

@@ -15,11 +15,11 @@ function Footer() {
               <div className="flex flex-col mt-2 font-thin text-sm">
 
                 <Link href="" className="hover:opacity-75">
-                  BD Office: 87, central road, Dhanmondi,  dhaka
+                   87, central road, Dhanmondi,  dhaka
                 </Link>
                 <Link href="" className="hover:opacity-75">
-                  বাসা ১৫, রাস্তা ৭, ধানমন্ডি ১২০৫, Dhaka,
-                  Bangladesh, 1 205
+                  Shop Address: house 15, road 7, dhanmondi 1205, Dhaka,
+                  Bangladesh
                 </Link>
 
 
